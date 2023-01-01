@@ -1,0 +1,63 @@
+Arguments: 
+  /home/koni/.nvm/versions/node/v16.16.0/bin/node /home/koni/.nvm/versions/node/v16.16.0/bin/yarn add fastify-websocket @types/fastify-websocket
+
+PATH: 
+  /home/koni/.nvm/versions/node/v16.16.0/bin:/home/koni/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/home/koni/.dotnet/tools:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.16.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@types%2ffastify-websocket: Not found
+      at Request.params.callback [as _callback] (/home/koni/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at Request.self.callback (/home/koni/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:527:28)
+      at Request.<anonymous> (/home/koni/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:527:28)
+      at IncomingMessage.<anonymous> (/home/koni/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:641:28)
+      at IncomingMessage.emit (node:events:539:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "kws",
+    "version": "1.0.0",
+    "description": "Some experimental web socket",
+    "main": "dist/index.js",
+    "scripts": {
+      "build": "tsc",
+      "prod": "tsc && node dist/index.js",
+      "start": "node dist/index.js",
+      "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+      "test": "tsc && node dist/index.js"
+    },
+    "keywords": [],
+    "author": "vKxni",
+    "license": "MIT",
+    "dependencies": {
+      "@fastify/cors": "^8.2.0",
+      "concurrently": "^7.6.0",
+      "dotenv": "^16.0.3",
+      "dotenvguard": "^1.3.5",
+      "fastify": "^4.10.2",
+      "nodemon": "^2.0.20",
+      "typescript": "^4.9.4"
+    },
+    "devDependencies": {
+      "@types/node": "^18.11.12"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
