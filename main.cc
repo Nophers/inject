@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <filesystem>
+#include <regex>
 
 #include "utils.hpp"
 
@@ -86,10 +87,24 @@ int navigateList(const std::vector<T> &items, bool canCancel = true)
     }
 }
 
+void install_deps()
+{
+    std::string command = "npm install";
+    system(command.c_str());
+}
+
 int main()
 {
     std::cout << "Enter project name: ";
     std::string projectName = readLine();
+    std::regex projectNameRegex("^[a-zA-Z]{3,16}$");
+
+    if (!std::regex_match(projectName, projectNameRegex))
+    {
+        setTextColor(1); // red
+        std::cout << "Project name invalid, make sure to enter at least 4 characters and less than 16, only Alphabets allowed" << std::endl;
+        return 1;
+    }
 
     std::vector<std::string> templates;
     std::string templateDirectory = "template";
@@ -103,7 +118,7 @@ int main()
     {
         std::cout << i + 1 << ") " << templates[i] << std::endl;
     }
-    std::cout << "Enter a number or use the arrow keys to navigate: ";
+    std::cout << "Enter a number: ";
 
     int templateIndex = -1;
     while (templateIndex == -1)
@@ -130,7 +145,12 @@ int main()
                 templateIndex--;
                 if (templateIndex < 0 || templateIndex >= templates.size())
                 {
+                    std::cout << "Invalid selection, please enter a valid number" << std::endl;
                     templateIndex = -1;
+                }
+                else
+                {
+                    std::cout << "Invalid format, please enter a valid number";
                 }
             }
             break;
@@ -139,7 +159,7 @@ int main()
 
     std::string templatePath = templateDirectory + "/" + templates[templateIndex];
 
-    std::vector<std::string> dependencies = {"npm", "mix"};
+    std::vector<std::string> dependencies = {"npm"};
     int dependencyIndex = navigateList(dependencies);
     if (dependencyIndex == -1)
     {
@@ -155,11 +175,11 @@ int main()
 
     clearTerminal();
     setTextColor(2); // green
-    std::cout << "Generated project:\n"
+    std::cout << "Generated project: " + projectName
               << std::endl;
     for (const auto &entry : std::filesystem::directory_iterator(projectName))
     {
-        std::cout << "  " << entry.path().filename();
+        std::cout << "  " << entry.path().filename() << std::endl;
     }
 
     setTextColor(7);
@@ -169,8 +189,12 @@ int main()
 
     if (installDependencies == "y")
     {
-        std::string installCommand = (dependencyManager == "npm") ? "cd " + projectName + " && npm install" : " cd " + projectName + " && mix deps.get";
-        std::system(installCommand.c_str());
+        std::filesystem::current_path(projectName);
+        install_deps();
+
+        std::cout
+            << "Installed dependencies:\n"
+            << std::endl;
     }
     else
     {
